@@ -1,0 +1,755 @@
+<!-- ==================== NOTES.HTML ==================== -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/5832/5832416.png">
+    <title>Notes - BSSE 1st Semester</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Calibri', Arial, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .animated-bg span {
+            position: absolute;
+            display: block;
+            width: 20px;
+            height: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            animation: animate 25s linear infinite;
+            bottom: -150px;
+        }
+
+        @keyframes animate {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-1000px) rotate(720deg); opacity: 0; }
+        }
+
+        .top-bar {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 2rem;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            border-radius: 60px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        .back-arrow {
+            font-size: 1.5rem;
+            text-decoration: none;
+            color: #667eea;
+            width: 45px;
+            height: 45px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.3s;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .back-arrow:hover {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            transform: translateX(-5px);
+        }
+
+        .page-title {
+            font-size: 1.8rem;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .page-title span {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 0.3rem 1rem;
+            border-radius: 40px;
+            font-size: 0.9rem;
+            -webkit-text-fill-color: white;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 3rem;
+            color: white;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .subhead {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 3rem;
+            font-size: 1.2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px dashed rgba(255, 255, 255, 0.3);
+        }
+
+        .global-download-btn {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+            z-index: 999;
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border: 2px solid white;
+        }
+
+        .global-download-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .subject-info {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 60px;
+            padding: 1.5rem;
+            margin: 2rem auto 3rem;
+            max-width: 1000px;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .subject-badge {
+            background: linear-gradient(135deg, #667eea20, #764ba220);
+            color: #667eea;
+            padding: 0.7rem 2rem;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border: 1px solid rgba(102, 126, 234, 0.3);
+        }
+
+        .subject-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1.5rem;
+            margin: 3rem 0;
+        }
+
+        .subject-btn {
+            background: white;
+            border: none;
+            padding: 1.2rem 2.5rem;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #667eea;
+            cursor: pointer;
+            transition: 0.3s;
+            border: 2px solid transparent;
+            min-width: 250px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .subject-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(102, 126, 234, 0.1);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .subject-btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .subject-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(102, 126, 234, 0.3);
+        }
+
+        .subject-btn.active {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .notes-panel {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 50px;
+            padding: 2.5rem;
+            margin-top: 2rem;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            max-width: 1400px;
+            margin-left: auto;
+            margin-right: auto;
+            display: none;
+            animation: slideUp 0.5s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .panel-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+        }
+
+        .panel-header h2 {
+            font-size: 2rem;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 0.8rem 2.5rem;
+            border-radius: 60px;
+            border: 2px solid white;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .close-panel-btn {
+            background: white;
+            border: 2px solid #667eea;
+            color: #667eea;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .close-panel-btn:hover {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            transform: rotate(90deg);
+            border-color: transparent;
+        }
+
+        .notes-inside {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-height: 600px;
+            overflow-y: auto;
+            padding: 1rem;
+        }
+
+        .notes-inside::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .notes-inside::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        .notes-inside::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 10px;
+        }
+
+        .note-item {
+            background: white;
+            border-radius: 30px;
+            padding: 2rem;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.05);
+            display: flex;
+            flex-direction: column;
+            border: 1px solid #f0f0f0;
+            transition: 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .note-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #667eea, #764ba2, #667eea);
+            background-size: 200% 100%;
+            animation: gradientMove 3s infinite;
+        }
+
+        .note-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 40px rgba(102, 126, 234, 0.15);
+        }
+
+        .note-title {
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: white;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            padding: 1rem;
+            border-radius: 40px;
+            margin-bottom: 1.2rem;
+            text-align: center;
+        }
+
+        .note-meta {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .note-meta span {
+            background: #f5f5f5;
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 1rem;
+            margin-top: auto;
+        }
+
+        .action-btn {
+            flex: 1;
+            border: none;
+            border-radius: 40px;
+            padding: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+            text-decoration: none;
+            text-align: center;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+
+        .view-btn {
+            background: #f8f9fa;
+            color: #667eea;
+            border: 2px solid #667eea;
+        }
+
+        .view-btn:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        .download-btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: 2px solid transparent;
+        }
+
+        .download-btn:hover {
+            transform: scale(1.02);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .no-notes {
+            grid-column: 1 / -1;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 4rem;
+            border-radius: 60px;
+            color: #667eea;
+            font-size: 1.5rem;
+            font-weight: 600;
+            text-align: center;
+            border: 2px dashed #667eea;
+        }
+
+        .stats-section {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 4rem 0 2rem;
+            flex-wrap: wrap;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 1.5rem 3rem;
+            border-radius: 60px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 1rem;
+        }
+
+        .info-footer {
+            margin-top: 3rem;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1.1rem;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .subject-btn {
+                min-width: 200px;
+                padding: 1rem 1.5rem;
+                font-size: 1rem;
+            }
+
+            .global-download-btn {
+                top: 15px;
+                right: 15px;
+                padding: 0.8rem 1.5rem;
+                font-size: 0.9rem;
+            }
+
+            .panel-header h2 {
+                font-size: 1.5rem;
+                padding: 0.5rem 1.5rem;
+            }
+
+            .stats-section {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .stat-card {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="animated-bg">
+        <span style="left: 10%; width: 40px; height: 40px; animation-delay: 2s;"></span>
+        <span style="left: 20%; width: 60px; height: 60px; animation-delay: 1s;"></span>
+        <span style="left: 35%; width: 30px; height: 30px; animation-delay: 3s;"></span>
+        <span style="left: 50%; width: 50px; height: 50px; animation-delay: 4s;"></span>
+        <span style="left: 65%; width: 45px; height: 45px; animation-delay: 2.5s;"></span>
+        <span style="left: 80%; width: 35px; height: 35px; animation-delay: 3.5s;"></span>
+    </div>
+
+    <div class="top-bar">
+        <a href="javascript:history.back()" class="back-arrow">←</a>
+        <div class="page-title">📝 1st Semester Notes <span>BSSE</span></div>
+    </div>
+
+    <button class="global-download-btn" id="downloadAllTopBtn">
+        <span>📥</span> Download All Notes
+    </button>
+
+    <h1>Subject Notes & Handouts</h1>
+    <div class="subhead">⬇️ Select a subject to view available notes</div>
+
+    <!-- Subject Info -->
+    <div class="subject-info">
+        <div class="subject-badge">
+            <span>💻</span> PF (11 notes)
+        </div>
+        <div class="subject-badge">
+            <span>🌐</span> ICT (9 notes)
+        </div>
+        <div class="subject-badge">
+            <span>📐</span> Calculus (2 notes)
+        </div>
+        <div class="subject-badge">
+            <span>⚡</span> Physics (3 notes)
+        </div>
+    </div>
+
+    <!-- Subject Buttons -->
+    <div class="subject-grid" id="subjectBtnContainer"></div>
+
+    <!-- Notes Panel -->
+    <div class="notes-panel" id="notesPanel">
+        <div class="panel-header">
+            <h2 id="panelSubject">Select a Subject</h2>
+            <button class="close-panel-btn" id="closePanel">✕</button>
+        </div>
+        <div class="notes-inside" id="notesContainer"></div>
+    </div>
+
+    <!-- Stats Section -->
+    <div class="stats-section">
+        <div class="stat-card">
+            <div class="stat-number">28+</div>
+            <div class="stat-label">Total Notes</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">8</div>
+            <div class="stat-label">Subjects</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">11</div>
+            <div class="stat-label">PF Notes</div>
+        </div>
+    </div>
+
+    <!-- Hidden Source Data -->
+    <div class="hidden-source" style="display: none;" id="hiddenSource">
+        <div class="note-card"><h3>Programming Fundamentals</h3>
+            <a href="P.F/PF Notes/C++ notes.pdf" data-name="C++ Complete Notes" data-size="2.4 MB" data-pages="120"></a>
+            <a href="P.F/PF Notes/MCQs C++.pdf" data-name="C++ MCQs" data-size="1.1 MB" data-pages="45"></a>
+            <a href="P.F/PF Notes/khadija c++.pdf" data-name="Khadija C++ Notes" data-size="3.2 MB" data-pages="85"></a>
+            <a href="P.F/PF Notes/Introduction to C++.pdf" data-name="Intro to C++" data-size="1.8 MB" data-pages="60"></a>
+            <a href="P.F/PF Notes/C++ Mids.pdf" data-name="C++ Mid Term Papers" data-size="2.1 MB" data-pages="95"></a>
+            <a href="P.F/PF Notes/C++ MY FILES.docx" data-name="My C++ Files" data-size="1.5 MB" data-pages="50"></a>
+            <a href="P.F/PF Notes/Programming fundamental course outline.pdf" data-name="Course Outline" data-size="0.5 MB" data-pages="12"></a>
+            <a href="P.F/PF Notes/Cpp notes.docx" data-name="C++ Handwritten Notes" data-size="4.2 MB" data-pages="150"></a>
+            <a href="P.F/PF Notes/P.F_Complete_Exam_Notes.pdf" data-name="PF Complete Exam Notes" data-size="3.8 MB" data-pages="200"></a>
+            <a href="P.F/PF Notes/Programming_Fundamentals_Complete_Exam_Notes.pdf" data-name="Programming Fundamentals Exam Notes" data-size="3.5 MB" data-pages="180"></a>
+            <a href="P.F/PF Notes/Progrmming Fundamentals.pdf" data-name="Programming Fundamentals PDF" data-size="5.1 MB" data-pages="250"></a>
+        </div>
+
+        <div class="note-card"><h3>Information and Communication Technology</h3>
+            <a href="ICT/ICT Notes/ICT notes.docx" data-name="ICT Complete Notes" data-size="2.8 MB" data-pages="95"></a>
+            <a href="ICT/ICT Notes/ICT_Complete_Notes.docx" data-name="ICT Detailed" data-size="3.1 MB" data-pages="110"></a>
+            <a href="ICT/ICT Notes/Computer Basics.docx" data-name="Computer Basics" data-size="1.2 MB" data-pages="40"></a>
+            <a href="ICT/ICT Notes/ICT notes 1.doc" data-name="ICT Notes Part 1" data-size="1.5 MB" data-pages="55"></a>
+            <a href="ICT/ICT Notes/ICT introduction technology.docx" data-name="ICT Introduction" data-size="1.8 MB" data-pages="62"></a>
+            <a href="ICT/ICT Notes/ICT introduction technology,literacy, components....pdf" data-name="ICT Literacy & Components" data-size="2.2 MB" data-pages="78"></a>
+            <a href="ICT/ICT Notes/ICT OUtline.pdf" data-name="ICT Course Outline" data-size="0.4 MB" data-pages="10"></a>
+            <a href="ICT/ICT Notes/Contents.docx" data-name="ICT Contents" data-size="0.3 MB" data-pages="8"></a>
+            <a href="ICT/ICT Notes/Weekly Lecture Plan ICT.pdf" data-name="Weekly Lecture Plan" data-size="0.6 MB" data-pages="15"></a>
+        </div>
+
+        <div class="note-card"><h3>Calculus and Analytical Geometry</h3>
+            <a href="Maths/calculus keybook bs cs.pdf" data-name="Calculus Keybook" data-size="6.2 MB" data-pages="300"></a>
+            <a href="Maths/calculus.pdf" data-name="Calculus Notes" data-size="4.5 MB" data-pages="220"></a>
+        </div>
+
+        <div class="note-card"><h3>Applied Physics</h3>
+            <a href="ICT/Physics notes.pdf" data-name="Physics Notes" data-size="3.2 MB" data-pages="150"></a>
+            <a href="ICT/electricity and magnetism-1.pdf" data-name="Electricity & Magnetism" data-size="2.8 MB" data-pages="130"></a>
+            <a href="ICT/Physics notes 1.docx" data-name="Physics Notes Part 1" data-size="1.9 MB" data-pages="85"></a>
+        </div>
+
+        <div class="note-card"><h3>Functional English</h3>
+            <a href="ICT/Word/English Syllabus.docx" data-name="English Syllabus" data-size="0.4 MB" data-pages="12"></a>
+            <a href="PDF/2025-11-04 21-28-54.pdf" data-name="English Notes" data-size="2.1 MB" data-pages="95"></a>
+            <a href="PDF/English Courses for OTHER BS programs and BS ENGLISH From Fall 2023 (1).pdf" data-name="English Courses BS Programs" data-size="1.8 MB" data-pages="82"></a>
+        </div>
+
+        <div class="note-card"><h3>Islamic Studies</h3>
+            <a href="PDF/Islamic Studies.pdf" data-name="Islamic Studies" data-size="2.5 MB" data-pages="120"></a>
+            <a href="PDF/CamScanner 06-11-2025 11.07.pdf" data-name="Islamic Scanner" data-size="3.2 MB" data-pages="145"></a>
+            <a href="PDF/2025-11-04 21-28-54.pdf" data-name="Islamic Studies Notes" data-size="2.8 MB" data-pages="135"></a>
+        </div>
+
+        <div class="note-card"><h3>Understanding of Holy Quran</h3>
+            <a href="Understanding of Holy Quran.pdf" data-name="Quran Notes" data-size="1.5 MB" data-pages="60"></a>
+        </div>
+
+        <div class="note-card"><h3>Basic Math-1</h3>
+            <a href="Maths/Basic Math 1.pdf" data-name="Basic Math" data-size="3.5 MB" data-pages="165"></a>
+            <a href="Maths/math solution one to nine chapter (BS FIRST SMARTER).pdf" data-name="Math Solutions" data-size="4.2 MB" data-pages="200"></a>
+            <a href="Maths/basic maths chapter 2.pdf" data-name="Basic Math Chapter 2" data-size="1.8 MB" data-pages="85"></a>
+            <a href="Maths/basic maths chapter 6.pdf" data-name="Basic Math Chapter 6" data-size="1.6 MB" data-pages="78"></a>
+            <a href="Maths/Pdf basic math chap 7.pdf" data-name="Basic Math Chapter 7" data-size="1.7 MB" data-pages="82"></a>
+            <a href="Maths/Basic Math.pdf" data-name="Basic Math Complete" data-size="5.2 MB" data-pages="250"></a>
+        </div>
+    </div>
+
+    <div class="info-footer">
+        ⚡ Click any subject to view notes with detailed information
+    </div>
+
+    <script>
+        (function() {
+            const source = document.getElementById('hiddenSource');
+            const cards = Array.from(source.querySelectorAll('.note-card'));
+            const subjects = cards.map(c => ({
+                subject: c.querySelector('h3').innerText,
+                notes: Array.from(c.querySelectorAll('a')).map(a => ({
+                    href: a.href,
+                    name: a.dataset.name,
+                    size: a.dataset.size || 'N/A',
+                    pages: a.dataset.pages || 'N/A'
+                }))
+            }));
+
+            const btnRow = document.getElementById('subjectBtnContainer');
+            const panel = document.getElementById('notesPanel');
+            const panelTitle = document.getElementById('panelSubject');
+            const notesDiv = document.getElementById('notesContainer');
+            const closeBtn = document.getElementById('closePanel');
+            const downloadAllBtn = document.getElementById('downloadAllTopBtn');
+
+            let activeSubject = null;
+
+            function renderNotes(subject) {
+                notesDiv.innerHTML = '';
+                panelTitle.innerText = subject.subject;
+
+                if (!subject.notes.length) {
+                    notesDiv.innerHTML = '<div class="no-notes">📭 No notes available for this subject</div>';
+                    return;
+                }
+
+                subject.notes.forEach(note => {
+                    const item = document.createElement('div');
+                    item.className = 'note-item';
+
+                    const title = document.createElement('div');
+                    title.className = 'note-title';
+                    title.innerText = note.name;
+                    item.appendChild(title);
+
+                    const meta = document.createElement('div');
+                    meta.className = 'note-meta';
+                    meta.innerHTML = `
+                        <span>📄 ${note.pages} pages</span>
+                        <span>💾 ${note.size}</span>
+                    `;
+                    item.appendChild(meta);
+
+                    const btnGroup = document.createElement('div');
+                    btnGroup.className = 'button-group';
+
+                    const viewBtn = document.createElement('a');
+                    viewBtn.href = note.href;
+                    viewBtn.target = '_blank';
+                    viewBtn.className = 'action-btn view-btn';
+                    viewBtn.innerHTML = '👁️ View';
+                    btnGroup.appendChild(viewBtn);
+
+                    const downloadBtn = document.createElement('a');
+                    downloadBtn.href = note.href;
+                    downloadBtn.download = true;
+                    downloadBtn.className = 'action-btn download-btn';
+                    downloadBtn.innerHTML = '📥 Download';
+                    btnGroup.appendChild(downloadBtn);
+
+                    item.appendChild(btnGroup);
+                    notesDiv.appendChild(item);
+                });
+            }
+
+            subjects.forEach(subject => {
+                const btn = document.createElement('button');
+                btn.className = 'subject-btn';
+                btn.innerText = subject.subject;
+
+                btn.onclick = () => {
+                    document.querySelectorAll('.subject-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    panel.style.display = 'block';
+                    renderNotes(subject);
+                    activeSubject = subject;
+                    panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                };
+
+                btnRow.appendChild(btn);
+            });
+
+            closeBtn.onclick = () => {
+                panel.style.display = 'none';
+                document.querySelectorAll('.subject-btn').forEach(b => b.classList.remove('active'));
+                activeSubject = null;
+            };
+
+            downloadAllBtn.addEventListener('click', () => {
+                if (!activeSubject) {
+                    alert('Please select a subject first.');
+                    return;
+                }
+
+                const links = activeSubject.notes.map(n => n.href).filter(h => h && h !== '#');
+                if (links.length === 0) {
+                    alert('No downloadable files for this subject.');
+                    return;
+                }
+
+                const confirmed = confirm(`Download all ${links.length} notes?`);
+                if (!confirmed) return;
+
+                links.forEach((link, index) => {
+                    setTimeout(() => {
+                        const a = document.createElement('a');
+                        a.href = link;
+                        a.download = true;
+                        a.target = '_blank';
+                        a.click();
+                    }, index * 250);
+                });
+            });
+        })();
+    </script>
+</body>
+</html>

@@ -1,0 +1,659 @@
+<!-- ==================== INDEX.HTML (HOME PAGE) ==================== -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/5832/5832416.png">
+    <title>BSSE Resource Hub | 1st Semester</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Calibri', Arial, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* Animated Background */
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .animated-bg span {
+            position: absolute;
+            display: block;
+            width: 20px;
+            height: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            animation: animate 25s linear infinite;
+            bottom: -150px;
+        }
+
+        @keyframes animate {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-1000px) rotate(720deg); opacity: 0; }
+        }
+
+        /* Top Bar */
+        .top-bar {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.2rem;
+            transform: rotate(45deg);
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 600;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .logo-text span {
+            background: #00bcd4;
+            color: white;
+            padding: 0.2rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin-left: 10px;
+            -webkit-text-fill-color: white;
+        }
+
+        .hamburger {
+            width: 50px;
+            height: 50px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            font-size: 1.5rem;
+            color: #667eea;
+            border: 2px solid transparent;
+        }
+
+        .hamburger:hover {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            transform: scale(1.1);
+        }
+
+        /* Side Menu */
+        .side-menu {
+            position: fixed;
+            top: 0;
+            left: -400px;
+            width: 350px;
+            height: 100vh;
+            background: white;
+            box-shadow: 5px 0 30px rgba(0, 0, 0, 0.1);
+            transition: 0.4s ease-in-out;
+            z-index: 1000;
+            overflow-y: auto;
+        }
+
+        .side-menu.active {
+            left: 0;
+        }
+
+        .menu-header {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            padding: 2rem;
+            color: white;
+        }
+
+        .menu-header h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .menu-header p {
+            opacity: 0.9;
+            font-size: 0.9rem;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 35px;
+            height: 35px;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 50%;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .close-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: rotate(90deg);
+        }
+
+        .menu-items {
+            padding: 1rem;
+        }
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 1rem;
+            border-radius: 10px;
+            transition: 0.3s;
+            cursor: pointer;
+            text-decoration: none;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .menu-item:hover {
+            background: #f5f5f5;
+            transform: translateX(5px);
+        }
+
+        .menu-item.active {
+            background: linear-gradient(135deg, #667eea20, #764ba220);
+            color: #667eea;
+            border-left: 4px solid #667eea;
+        }
+
+        .menu-icon {
+            width: 35px;
+            height: 35px;
+            background: #f5f5f5;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .menu-item:hover .menu-icon {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .dropdown {
+            margin-bottom: 5px;
+        }
+
+        .dropdown-btn {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 1rem;
+            border-radius: 10px;
+            transition: 0.3s;
+            cursor: pointer;
+            width: 100%;
+            border: none;
+            background: none;
+            font-size: 1rem;
+            color: #333;
+        }
+
+        .dropdown-btn:hover {
+            background: #f5f5f5;
+        }
+
+        .dropdown-btn i {
+            margin-left: auto;
+            transition: 0.3s;
+        }
+
+        .dropdown-btn.active i {
+            transform: rotate(180deg);
+        }
+
+        .dropdown-content {
+            margin-left: 50px;
+            display: none;
+        }
+
+        .dropdown-content.show {
+            display: block;
+        }
+
+        .dropdown-content .menu-item {
+            padding: 0.8rem 1rem;
+        }
+
+        /* Main Content */
+        .main-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 30px;
+            margin-bottom: 3rem;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        .hero-section h1 {
+            font-size: 3.5rem;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .hero-section p {
+            font-size: 1.2rem;
+            color: #666;
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 0.5rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            margin-top: 2rem;
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        /* Stats Section */
+        .stats-container {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin: 3rem 0;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            text-align: center;
+            min-width: 200px;
+            transition: 0.3s;
+            border: 1px solid #f0f0f0;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.15);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 1.1rem;
+            margin-top: 0.5rem;
+        }
+
+        /* Cards Grid */
+        .section-title {
+            text-align: center;
+            margin: 4rem 0 2rem;
+            position: relative;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: white;
+            display: inline-block;
+            padding: 0 2rem;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border-radius: 50px;
+            padding: 1rem 3rem;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .nav-card {
+            background: white;
+            border-radius: 30px;
+            padding: 2.5rem 2rem;
+            text-align: center;
+            text-decoration: none;
+            color: inherit;
+            transition: 0.3s;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            transform: scaleX(0);
+            transition: transform 0.3s;
+        }
+
+        .nav-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .nav-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 40px rgba(102, 126, 234, 0.3);
+        }
+
+        .nav-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #667eea20, #764ba220);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            margin: 0 auto 1.5rem;
+            transition: 0.3s;
+        }
+
+        .nav-card:hover .nav-icon {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            transform: rotate(10deg) scale(1.1);
+        }
+
+        .nav-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-card p {
+            color: #666;
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        .card-badge {
+            display: inline-block;
+            background: #f0f0f0;
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: #666;
+            margin-top: 1rem;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 3rem;
+            color: white;
+            margin-top: 4rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        @media (max-width: 768px) {
+            .hero-section h1 {
+                font-size: 2.5rem;
+            }
+
+            .side-menu {
+                width: 100%;
+                left: -100%;
+            }
+
+            .stats-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .stat-card {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="animated-bg">
+        <span style="left: 10%; width: 40px; height: 40px; animation-delay: 2s;"></span>
+        <span style="left: 20%; width: 60px; height: 60px; animation-delay: 1s;"></span>
+        <span style="left: 35%; width: 30px; height: 30px; animation-delay: 3s;"></span>
+        <span style="left: 50%; width: 50px; height: 50px; animation-delay: 4s;"></span>
+        <span style="left: 65%; width: 45px; height: 45px; animation-delay: 2.5s;"></span>
+        <span style="left: 80%; width: 35px; height: 35px; animation-delay: 3.5s;"></span>
+    </div>
+
+    <div class="top-bar">
+        <div class="logo">
+            <div class="logo-icon">BS</div>
+            <div class="logo-text">BSSE Resource Hub <span>1st Sem</span></div>
+        </div>
+        <div class="hamburger" onclick="toggleMenu()">☰</div>
+    </div>
+
+    <div id="sideMenu" class="side-menu">
+        <div class="menu-header">
+            <h3>Navigation Menu</h3>
+            <p>BS Software Engineering - 1st Semester</p>
+            <button class="close-btn" onclick="toggleMenu()">✕</button>
+        </div>
+        
+        <div class="menu-items">
+            <a href="index.html" class="menu-item active">
+                <div class="menu-icon">🏠</div>
+                <span>Home</span>
+            </a>
+
+            <div class="dropdown">
+                <button class="dropdown-btn" onclick="toggleDropdown(this)">
+                    <div class="menu-icon">📚</div>
+                    <span>1st Semester Resources</span>
+                    <i>▼</i>
+                </button>
+                <div class="dropdown-content">
+                    <a href="books.html" class="menu-item">
+                        <div class="menu-icon">📚</div>
+                        <span>Books</span>
+                    </a>
+                    <a href="notes.html" class="menu-item">
+                        <div class="menu-icon">📝</div>
+                        <span>Notes</span>
+                    </a>
+                    <a href="lectures.html" class="menu-item">
+                        <div class="menu-icon">🎥</div>
+                        <span>Lectures</span>
+                    </a>
+                    <a href="assignments.html" class="menu-item">
+                        <div class="menu-icon">📋</div>
+                        <span>Assignments</span>
+                    </a>
+                    <a href="practicals.html" class="menu-item">
+                        <div class="menu-icon">🔧</div>
+                        <span>Practicals</span>
+                    </a>
+                </div>
+            </div>
+
+            <a href="contacts.html" class="menu-item">
+                <div class="menu-icon">📞</div>
+                <span>Contact</span>
+            </a>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="hero-section">
+            <h1>BS Software Engineering</h1>
+            <p>Your complete resource hub for 1st semester - Access books, notes, lectures, assignments, and practicals all in one place.</p>
+            <div class="hero-badge">🎓 1st Semester Resource Hub</div>
+        </div>
+
+        <div class="stats-container">
+            <div class="stat-card">
+                <div class="stat-number">130+</div>
+                <div class="stat-label">Total Files</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">8</div>
+                <div class="stat-label">Subjects</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">12</div>
+                <div class="stat-label">Assignments</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">47</div>
+                <div class="stat-label">Programs</div>
+            </div>
+        </div>
+
+        <div class="section-title">
+            <h2>📌 Quick Access</h2>
+        </div>
+
+        <div class="cards-grid">
+            <a href="books.html" class="nav-card">
+                <div class="nav-icon">📚</div>
+                <h3>Books</h3>
+                <p>Comprehensive textbooks and reference materials for all subjects</p>
+                <div class="card-badge">6+ Books</div>
+            </a>
+
+            <a href="notes.html" class="nav-card">
+                <div class="nav-icon">📝</div>
+                <h3>Notes</h3>
+                <p>Handwritten notes, summaries, and exam preparation materials</p>
+                <div class="card-badge">25+ Notes</div>
+            </a>
+
+            <a href="lectures.html" class="nav-card">
+                <div class="nav-icon">🎥</div>
+                <h3>Lectures</h3>
+                <p>Video lectures and slide presentations for better understanding</p>
+                <div class="card-badge">30+ Lectures</div>
+            </a>
+
+            <a href="assignments.html" class="nav-card">
+                <div class="nav-icon">📋</div>
+                <h3>Assignments</h3>
+                <p>Complete assignments with solutions for PF, ICT, and Calculus</p>
+                <div class="card-badge">12 Assignments</div>
+            </a>
+
+            <a href="practicals.html" class="nav-card">
+                <div class="nav-icon">🔧</div>
+                <h3>Practicals</h3>
+                <p>ICT (Word, Excel, PPT) and PF (C++ programs with EXE files)</p>
+                <div class="card-badge">130+ Files</div>
+            </a>
+
+            <a href="contacts.html" class="nav-card">
+                <div class="nav-icon">📞</div>
+                <h3>Contact</h3>
+                <p>Get in touch for queries, guidance, and academic support</p>
+                <div class="card-badge">24/7 Support</div>
+            </a>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>© 2026 BSSE Resource Hub - 1st Semester. All rights reserved.</p>
+        <p style="font-size: 0.9rem; margin-top: 0.5rem; opacity: 0.8;">Made with ❤️ for BSSE Students</p>
+    </div>
+
+    <script>
+        function toggleMenu() {
+            document.getElementById('sideMenu').classList.toggle('active');
+        }
+
+        function toggleDropdown(btn) {
+            btn.classList.toggle('active');
+            btn.nextElementSibling.classList.toggle('show');
+        }
+
+        // Close menu when clicking outside
+        document.addEventListener('click', function(e) {
+            const menu = document.getElementById('sideMenu');
+            const hamburger = document.querySelector('.hamburger');
+            
+            if (!menu.contains(e.target) && !hamburger.contains(e.target) && menu.classList.contains('active')) {
+                menu.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>

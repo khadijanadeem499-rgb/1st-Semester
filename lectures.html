@@ -1,0 +1,802 @@
+<!-- ==================== LECTURES.HTML ==================== -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/5832/5832416.png">
+    <title>Lectures - BSSE 1st Semester</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Calibri', Arial, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .animated-bg span {
+            position: absolute;
+            display: block;
+            width: 20px;
+            height: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            animation: animate 25s linear infinite;
+            bottom: -150px;
+        }
+
+        @keyframes animate {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-1000px) rotate(720deg); opacity: 0; }
+        }
+
+        .top-bar {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 2rem;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            border-radius: 60px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        .back-arrow {
+            font-size: 1.5rem;
+            text-decoration: none;
+            color: #667eea;
+            width: 45px;
+            height: 45px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.3s;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .back-arrow:hover {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            transform: translateX(-5px);
+        }
+
+        .page-title {
+            font-size: 1.8rem;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .page-title span {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 0.3rem 1rem;
+            border-radius: 40px;
+            font-size: 0.9rem;
+            -webkit-text-fill-color: white;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 3rem;
+            color: white;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .subhead {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 3rem;
+            font-size: 1.2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px dashed rgba(255, 255, 255, 0.3);
+        }
+
+        .global-download-btn {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+            z-index: 999;
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border: 2px solid white;
+        }
+
+        .global-download-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .lecture-stats {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin: 3rem 0;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 1.5rem 3rem;
+            border-radius: 60px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 1rem;
+        }
+
+        .subject-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1.5rem;
+            margin: 3rem 0;
+        }
+
+        .subject-btn {
+            background: white;
+            border: none;
+            padding: 1.2rem 2.5rem;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #667eea;
+            cursor: pointer;
+            transition: 0.3s;
+            border: 2px solid transparent;
+            min-width: 250px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .subject-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(102, 126, 234, 0.1);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .subject-btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .subject-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(102, 126, 234, 0.3);
+        }
+
+        .subject-btn.active {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .lecture-panel {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 50px;
+            padding: 2.5rem;
+            margin-top: 2rem;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            max-width: 1400px;
+            margin-left: auto;
+            margin-right: auto;
+            display: none;
+            animation: slideUp 0.5s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .panel-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+        }
+
+        .panel-header h2 {
+            font-size: 2rem;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 0.8rem 2.5rem;
+            border-radius: 60px;
+            border: 2px solid white;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .close-panel-btn {
+            background: white;
+            border: 2px solid #667eea;
+            color: #667eea;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .close-panel-btn:hover {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            transform: rotate(90deg);
+            border-color: transparent;
+        }
+
+        .lectures-inside {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-height: 600px;
+            overflow-y: auto;
+            padding: 1rem;
+        }
+
+        .lectures-inside::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .lectures-inside::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        .lectures-inside::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 10px;
+        }
+
+        .lecture-item {
+            background: white;
+            border-radius: 30px;
+            padding: 2rem;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.05);
+            border: 1px solid #f0f0f0;
+            transition: 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .lecture-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #667eea, #764ba2, #667eea);
+            background-size: 200% 100%;
+            animation: gradientMove 3s infinite;
+        }
+
+        .lecture-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 40px rgba(102, 126, 234, 0.15);
+        }
+
+        .lecture-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .lecture-title {
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: white;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            padding: 1rem;
+            border-radius: 40px;
+            margin-bottom: 1.2rem;
+            text-align: center;
+        }
+
+        .lecture-meta {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .lecture-type {
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .type-pdf {
+            background: #ffebee;
+            color: #f44336;
+        }
+
+        .type-video {
+            background: #e3f2fd;
+            color: #2196f3;
+        }
+
+        .type-doc {
+            background: #e8f5e9;
+            color: #4caf50;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 1rem;
+            margin-top: auto;
+        }
+
+        .action-btn {
+            flex: 1;
+            border: none;
+            border-radius: 40px;
+            padding: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+            text-decoration: none;
+            text-align: center;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+
+        .view-btn {
+            background: #f8f9fa;
+            color: #667eea;
+            border: 2px solid #667eea;
+        }
+
+        .view-btn:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        .download-btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: 2px solid transparent;
+        }
+
+        .download-btn:hover {
+            transform: scale(1.02);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .watch-btn {
+            background: #ff4081;
+            color: white;
+            border: 2px solid transparent;
+        }
+
+        .watch-btn:hover {
+            background: #f50057;
+        }
+
+        .no-lectures {
+            grid-column: 1 / -1;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 4rem;
+            border-radius: 60px;
+            color: #667eea;
+            font-size: 1.5rem;
+            font-weight: 600;
+            text-align: center;
+            border: 2px dashed #667eea;
+        }
+
+        .info-footer {
+            margin-top: 3rem;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1.1rem;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .subject-btn {
+                min-width: 200px;
+                padding: 1rem 1.5rem;
+                font-size: 1rem;
+            }
+
+            .global-download-btn {
+                top: 15px;
+                right: 15px;
+                padding: 0.8rem 1.5rem;
+                font-size: 0.9rem;
+            }
+
+            .panel-header h2 {
+                font-size: 1.5rem;
+                padding: 0.5rem 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="animated-bg">
+        <span style="left: 10%; width: 40px; height: 40px; animation-delay: 2s;"></span>
+        <span style="left: 20%; width: 60px; height: 60px; animation-delay: 1s;"></span>
+        <span style="left: 35%; width: 30px; height: 30px; animation-delay: 3s;"></span>
+        <span style="left: 50%; width: 50px; height: 50px; animation-delay: 4s;"></span>
+        <span style="left: 65%; width: 45px; height: 45px; animation-delay: 2.5s;"></span>
+        <span style="left: 80%; width: 35px; height: 35px; animation-delay: 3.5s;"></span>
+    </div>
+
+    <div class="top-bar">
+        <a href="javascript:history.back()" class="back-arrow">←</a>
+        <div class="page-title">🎥 1st Semester Lectures <span>BSSE</span></div>
+    </div>
+
+    <button class="global-download-btn" id="downloadAllTopBtn">
+        <span>📥</span> Download All Lectures
+    </button>
+
+    <h1>Lecture Slides & Videos</h1>
+    <div class="subhead">⬇️ Select a subject to access lectures</div>
+
+    <!-- Stats -->
+    <div class="lecture-stats">
+        <div class="stat-card">
+            <div class="stat-number">42</div>
+            <div class="stat-label">Total Lectures</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">30</div>
+            <div class="stat-label">PDF Slides</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">19</div>
+            <div class="stat-label">Video Lectures</div>
+        </div>
+    </div>
+
+    <!-- Subject Buttons -->
+    <div class="subject-grid" id="subjectButtonContainer"></div>
+
+    <!-- Lecture Panel -->
+    <div class="lecture-panel" id="lecturePanel">
+        <div class="panel-header">
+            <h2 id="currentSubjectHeading">Select a Subject</h2>
+            <button class="close-panel-btn" id="closePanelBtn">✕</button>
+        </div>
+        <div class="lectures-inside" id="lecturesContainer"></div>
+    </div>
+
+    <!-- Hidden Source Data -->
+    <div style="display: none;" id="hiddenSource">
+        <div class="original-lecture-container">
+            <!-- Programming Fundamentals -->
+            <div class="lecture-card" data-subject="Programming Fundamentals">
+                <h3>Programming Fundamentals</h3>
+                <a href="P.F/PF Slides/C++ LEC 1.pdf" target="_blank" data-name="C++ Lecture 1 - Introduction" data-type="pdf"></a>
+                <a href="P.F/PF Slides/C++ LEC 2.pdf" target="_blank" data-name="C++ Lecture 2 - Variables & Data Types" data-type="pdf"></a>
+                <a href="P.F/PF Slides/C++ LEC 3.pdf" target="_blank" data-name="C++ Lecture 3 - Control Structures" data-type="pdf"></a>
+                <a href="P.F/PF Slides/C++ LEC 4.pdf" target="_blank" data-name="C++ Lecture 4 - Functions" data-type="pdf"></a>
+                <a href="P.F/PF Slides/CS201-01.pdf" target="_blank" data-name="CS201 Lecture 01" data-type="pdf"></a>
+                <a href="P.F/PF Slides/CS201-02.pdf" target="_blank" data-name="CS201 Lecture 02" data-type="pdf"></a>
+                <a href="P.F/PF Slides/CS201-03.pdf" target="_blank" data-name="CS201 Lecture 03" data-type="pdf"></a>
+                <a href="P.F/PF Slides/CS201-04.pdf" target="_blank" data-name="CS201 Lecture 04" data-type="pdf"></a>
+                <a href="P.F/PF Slides/CS201-05.pdf" target="_blank" data-name="CS201 Lecture 05" data-type="pdf"></a>
+                <a href="P.F/PF Slides/CS201-06.pdf" target="_blank" data-name="CS201 Lecture 06" data-type="pdf"></a>
+                <a href="P.F/PF Slides/CS201-07.pdf" target="_blank" data-name="CS201 Lecture 07" data-type="pdf"></a>
+                <a href="P.F/PF Slides/CS201-08.pdf" target="_blank" data-name="CS201 Lecture 08" data-type="pdf"></a>
+                <a href="P.F/PF Slides/CS201-09.pdf" target="_blank" data-name="CS201 Lecture 09" data-type="pdf"></a>
+                <a href="P.F/PF Slides/CS201-10.pdf" target="_blank" data-name="CS201 Lecture 10" data-type="pdf"></a>
+                <a href="P.F/PF Slides/CS201-11.pdf" target="_blank" data-name="CS201 Lecture 11" data-type="pdf"></a>
+                <a href="P.F/PF Slides/CS201-12.pdf" target="_blank" data-name="CS201 Lecture 12" data-type="pdf"></a>
+                <a href="P.F/PF Slides/CS201-13.pdf" target="_blank" data-name="CS201 Lecture 13" data-type="pdf"></a>
+                <a href="P.F/PF Slides/CS201-14.pdf" target="_blank" data-name="CS201 Lecture 14" data-type="pdf"></a>
+                <a href="P.F/PF Slides/CS201-15.pdf" target="_blank" data-name="CS201 Lecture 15" data-type="pdf"></a>
+                <a href="P.F/PF Slides/CS201-16.pdf" target="_blank" data-name="CS201 Lecture 16" data-type="pdf"></a>
+                <a href="P.F/PF Slides/CS201-17.pdf" target="_blank" data-name="CS201 Lecture 17" data-type="pdf"></a>
+                <a href="P.F/PF Slides/CS201-18.pdf" target="_blank" data-name="CS201 Lecture 18" data-type="pdf"></a>
+                <a href="P.F/PF Slides/CS201-19.pdf" target="_blank" data-name="CS201 Lecture 19" data-type="pdf"></a>
+                <a href="P.F/PF Slides/CS201-20.pdf" target="_blank" data-name="CS201 Lecture 20" data-type="pdf"></a>
+                <a href="P.F/PF Slides/CS201-28.pdf" target="_blank" data-name="CS201 Lecture 28" data-type="pdf"></a>
+                <a href="P.F/PF Slides/CS201-29.pdf" target="_blank" data-name="CS201 Lecture 29" data-type="pdf"></a>
+                <a href="P.F/PF Slides/CS201-30.pdf" target="_blank" data-name="CS201 Lecture 30" data-type="pdf"></a>
+                <a href="P.F/PF Slides/Chapter 1.pdf" target="_blank" data-name="Chapter 1 - Introduction to Programming" data-type="pdf"></a>
+                <a href="P.F/PF Slides/Functions in C++ Part 1.pdf" target="_blank" data-name="Functions in C++ - Part 1" data-type="pdf"></a>
+                <a href="P.F/PF Slides/Functions in C++ Part 2.pdf" target="_blank" data-name="Functions in C++ - Part 2" data-type="pdf"></a>
+                <a href="P.F/PF Slides/Functions in C++ Programs Example.pdf" target="_blank" data-name="Functions in C++ - Examples" data-type="pdf"></a>
+                <a href="Programming fundamental course outline.pdf" target="_blank" data-name="Course Outline - Programming Fundamentals" data-type="pdf"></a>
+            </div>
+
+            <!-- ICT -->
+            <div class="lecture-card" data-subject="Information and Communication Technology">
+                <h3>Information and Communication Technology</h3>
+                <a href="https://www.youtube.com/watch?v=i0_3DuxWvJU" target="_blank" data-name="ICT Lecture 1 - Introduction" data-type="video"></a>
+                <a href="https://www.youtube.com/watch?v=dS5xzuLLbxU" target="_blank" data-name="ICT Lecture 2 - Computer Hardware" data-type="video"></a>
+                <a href="https://www.youtube.com/watch?v=8-DPmZyDYXw" target="_blank" data-name="ICT Lecture 3 - Software" data-type="video"></a>
+                <a href="https://www.youtube.com/watch?v=8UTaWYchz1Y" target="_blank" data-name="ICT Lecture 4 - Operating Systems" data-type="video"></a>
+                <a href="https://www.youtube.com/watch?v=LCiU4gIWkgo" target="_blank" data-name="ICT Lecture 5 - Networks" data-type="video"></a>
+                <a href="https://www.youtube.com/watch?v=Ud5tUBMtFDQ" target="_blank" data-name="ICT Lecture 6 - Internet" data-type="video"></a>
+                <a href="https://www.youtube.com/watch?v=edopxUKVtYI" target="_blank" data-name="ICT Lecture 7 - Web Technologies" data-type="video"></a>
+                <a href="https://www.youtube.com/watch?v=BS5SpGSEU78" target="_blank" data-name="ICT Lecture 8 - Emerging Technologies" data-type="video"></a>
+                <a href="ICT/ICT Notes/ICT notes.docx" target="_blank" data-name="ICT Complete Notes" data-type="doc"></a>
+            </div>
+
+            <!-- Calculus -->
+            <div class="lecture-card" data-subject="Calculus and Analytical Geometry">
+                <h3>Calculus and Analytical Geometry</h3>
+                <a href="Maths/calculus keybook bs cs.pdf" target="_blank" data-name="Calculus Keybook - Complete" data-type="pdf"></a>
+                <a href="Maths/calculus keybook bs cs.pdf" target="_blank" data-name="Calculus Keybook - Complete" data-type="pdf"></a>
+                <a href="Maths/calculus.pdf" target="_blank" data-name="Calculus Keybook - Complete" data-type="pdf"></a>
+            </div>
+
+            <!-- Applied Physics -->
+            <div class="lecture-card" data-subject="Applied Physics">
+                <h3>Applied Physics</h3>
+            </div>
+
+            <!-- Functional English -->
+            <div class="lecture-card" data-subject="Functional English">
+                <h3>Functional English</h3>
+                <a href="https://www.youtube.com/watch?v=LXNiomjFYI0" target="_blank" data-name="English Lecture 1 - Grammar Basics" data-type="video"></a>
+                <a href="https://www.youtube.com/watch?v=rO0YkRmgryU" target="_blank" data-name="English Lecture 2 - Sentence Structure" data-type="video"></a>
+                <a href="https://www.youtube.com/watch?v=Z1d6Eqj5BVw" target="_blank" data-name="English Lecture 3 - Tenses" data-type="video"></a>
+                <a href="https://www.youtube.com/watch?v=HOuzTW2H1PQ" target="_blank" data-name="English Lecture 4 - Vocabulary" data-type="video"></a>
+                <a href="https://www.youtube.com/watch?v=4coqQklUS-M" target="_blank" data-name="English Lecture 5 - Communication Skills" data-type="video"></a>
+                <a href="https://www.youtube.com/watch?v=ptHRKMXN2lA" target="_blank" data-name="English Lecture 6 - Writing Skills" data-type="video"></a>
+            </div>
+
+            <!-- Islamic Studies -->
+            <div class="lecture-card" data-subject="Islamic Studies">
+                <h3>Islamic Studies</h3>
+                <a href="https://www.youtube.com/watch?v=b6o01Cfrk7k" target="_blank" data-name="Islamic Studies - Introduction" data-type="video"></a>
+                <a href="https://www.youtube.com/watch?v=I_Dx7TliSnY" target="_blank" data-name="Islamic Studies - Quranic Studies" data-type="video"></a>
+                <a href="https://www.youtube.com/watch?v=bvI8yI_ApYA" target="_blank" data-name="Islamic Studies - Hadith" data-type="video"></a>
+                <a href="https://www.youtube.com/watch?v=G2KwxjreP5E" target="_blank" data-name="Islamic Studies - Islamic History" data-type="video"></a>
+                <a href="https://www.youtube.com/watch?v=UrRU7hN6CrI" target="_blank" data-name="Islamic Studies - Fiqh" data-type="video"></a>
+            </div>
+
+            <!-- Understanding of Holy Quran -->
+            <div class="lecture-card" data-subject="Understanding of Holy Quran">
+                <h3>Understanding of Holy Quran</h3>
+            </div>
+
+            <!-- Basic Math-1 -->
+            <div class="lecture-card" data-subject="Basic Math-1">
+                <h3>Basic Math-1</h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="info-footer">
+        ⚡ Click any subject to view lectures - PDFs can be downloaded, videos can be watched online
+    </div>
+
+    <script>
+        (function() {
+            const sourceContainer = document.getElementById('hiddenSource');
+            const subjectCards = Array.from(sourceContainer.querySelectorAll('.lecture-card'));
+
+            const subjectsData = subjectCards.map(card => {
+                const titleElem = card.querySelector('h3');
+                const subjectName = titleElem ? titleElem.innerText.trim() : 'unknown';
+                const links = Array.from(card.querySelectorAll('a[href]'));
+                const lectures = links.map(link => {
+                    return {
+                        href: link.getAttribute('href') || '#',
+                        name: link.getAttribute('data-name') || 'Lecture',
+                        type: link.getAttribute('data-type') || 'pdf'
+                    };
+                });
+                return { subject: subjectName, lectures };
+            });
+
+            const btnContainer = document.getElementById('subjectButtonContainer');
+            const panel = document.getElementById('lecturePanel');
+            const lecturesContainer = document.getElementById('lecturesContainer');
+            const subjectHeading = document.getElementById('currentSubjectHeading');
+            const closeBtn = document.getElementById('closePanelBtn');
+            const downloadAllBtn = document.getElementById('downloadAllTopBtn');
+
+            let activeSubject = null;
+
+            function renderLectures(subjectObj) {
+                lecturesContainer.innerHTML = '';
+                subjectHeading.innerText = subjectObj.subject;
+
+                if (!subjectObj.lectures || subjectObj.lectures.length === 0) {
+                    lecturesContainer.innerHTML = '<div class="no-lectures">📭 No lecture files available for this subject</div>';
+                    return;
+                }
+
+                subjectObj.lectures.forEach(lec => {
+                    const card = document.createElement('div');
+                    card.className = 'lecture-item';
+
+                    // Add type badge
+                    const badge = document.createElement('div');
+                    badge.className = 'lecture-badge';
+                    badge.innerText = lec.type === 'video' ? '🎥 Video' : lec.type === 'pdf' ? '📄 PDF' : '📝 Document';
+                    card.appendChild(badge);
+
+                    const titleDiv = document.createElement('div');
+                    titleDiv.className = 'lecture-title';
+                    titleDiv.innerText = lec.name;
+                    card.appendChild(titleDiv);
+
+                    const typeDiv = document.createElement('div');
+                    typeDiv.className = 'lecture-meta';
+                    const typeSpan = document.createElement('span');
+                    typeSpan.className = `lecture-type type-${lec.type}`;
+                    typeSpan.innerText = lec.type.toUpperCase();
+                    typeDiv.appendChild(typeSpan);
+                    card.appendChild(typeDiv);
+
+                    const btnGroup = document.createElement('div');
+                    btnGroup.className = 'button-group';
+
+                    if (lec.href && lec.href !== '#') {
+                        if (lec.type === 'video') {
+                            const watchBtn = document.createElement('a');
+                            watchBtn.href = lec.href;
+                            watchBtn.target = '_blank';
+                            watchBtn.className = 'action-btn watch-btn';
+                            watchBtn.innerHTML = '▶️ Watch Video';
+                            btnGroup.appendChild(watchBtn);
+                        } else {
+                            const viewBtn = document.createElement('a');
+                            viewBtn.href = lec.href;
+                            viewBtn.target = '_blank';
+                            viewBtn.className = 'action-btn view-btn';
+                            viewBtn.innerHTML = '👁️ View';
+                            btnGroup.appendChild(viewBtn);
+
+                            if (lec.href.includes('.pdf') || lec.href.includes('.docx')) {
+                                const downloadBtn = document.createElement('a');
+                                downloadBtn.href = lec.href;
+                                downloadBtn.download = true;
+                                downloadBtn.target = '_blank';
+                                downloadBtn.className = 'action-btn download-btn';
+                                downloadBtn.innerHTML = '📥 Download';
+                                btnGroup.appendChild(downloadBtn);
+                            }
+                        }
+                    }
+
+                    card.appendChild(btnGroup);
+                    lecturesContainer.appendChild(card);
+                });
+            }
+
+            subjectsData.forEach((item) => {
+                const btn = document.createElement('button');
+                btn.className = 'subject-btn';
+                btn.innerText = `${item.subject} (${item.lectures.length})`;
+                btn.setAttribute('data-subject', item.subject);
+
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.subject-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    panel.style.display = 'block';
+                    renderLectures(item);
+                    activeSubject = item;
+                    panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                });
+
+                btnContainer.appendChild(btn);
+            });
+
+            closeBtn.addEventListener('click', () => {
+                panel.style.display = 'none';
+                document.querySelectorAll('.subject-btn').forEach(b => b.classList.remove('active'));
+                activeSubject = null;
+            });
+
+            downloadAllBtn.addEventListener('click', () => {
+                if (!activeSubject) {
+                    alert('Please select a subject first.');
+                    return;
+                }
+
+                const links = activeSubject.lectures
+                    .map(l => l.href)
+                    .filter(h => h && h !== '#' && (h.includes('.pdf') || h.includes('.docx')));
+
+                if (links.length === 0) {
+                    alert('No downloadable files for this subject');
+                    return;
+                }
+
+                const confirmed = confirm(`Download all ${links.length} files?`);
+                if (!confirmed) return;
+
+                links.forEach((link, index) => {
+                    setTimeout(() => {
+                        const a = document.createElement('a');
+                        a.href = link;
+                        a.download = true;
+                        a.target = '_blank';
+                        a.click();
+                    }, index * 250);
+                });
+            });
+        })();
+    </script>
+</body>
+</html>
