@@ -465,6 +465,23 @@
             border-top: 1px solid rgba(255, 255, 255, 0.2);
         }
 
+        /* Animation for success message */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
         @media (max-width: 768px) {
             .hero-section h1 {
                 font-size: 2.5rem;
@@ -629,82 +646,65 @@
             </a>
         </div>
     </div>
-<!-- ==================== GOOGLE FORM COMMENTS SECTION ==================== -->
-<div style="max-width: 1400px; margin: 4rem auto 2rem; padding: 0 2rem;">
-    <div style="background: rgba(255,255,255,0.95); border-radius: 30px; padding: 2rem; backdrop-filter: blur(10px); box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
-        
-        <!-- Header -->
-        <div style="text-align: center; margin-bottom: 2rem;">
-            <h3 style="background: linear-gradient(135deg, #667eea, #764ba2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-size: 2rem; margin-bottom: 0.5rem;">💬 Share Your Feedback</h3>
-            <p style="color: #666;">Have questions, suggestions, or found a broken link? Let me know!</p>
-            <p style="color: #999; font-size: 0.9rem;">📧 You'll receive a copy of your response via email</p>
-        </div>
-        
-        <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSddxRqSASLz-9xB2S_YDim5kwV6sH4nwzRguPOFlcvcGPGudQ/viewform?embedded=true" width="700" height="520" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
-        <iframe 
-            src="https://docs.google.com/forms/d/e/YOUR_FORM_ID_HERE/viewform?embedded=true" 
-            width="100%" 
-            height="650" 
-            frameborder="0" 
-            marginheight="0" 
-            marginwidth="0"
-            style="border-radius: 20px; border: none; box-shadow: 0 5px 15px rgba(0,0,0,0.05);">
-            Loading…
-        </iframe>
-        
-        <!-- Recent Comments Display (Optional) -->
-        <div style="margin-top: 2rem; padding-top: 2rem; border-top: 2px dashed #e0e0e0;">
-            <h4 style="color: #667eea; margin-bottom: 1rem;">📢 Recent Feedback</h4>
-            <div id="recent-feedback" style="max-height: 300px; overflow-y: auto;">
-                <p style="color: #999; text-align: center;">Loading comments...</p>
+
+    <!-- ==================== FIXED GOOGLE FORM COMMENTS SECTION ==================== -->
+    <div style="max-width: 1400px; margin: 0 auto 2rem; padding: 0 2rem;">
+        <div style="background: rgba(255,255,255,0.95); border-radius: 30px; padding: 2rem; backdrop-filter: blur(10px); box-shadow: 0 10px 30px rgba(0,0,0,0.1); transition: all 0.3s ease;">
+            
+            <!-- Header -->
+            <div style="text-align: center; margin-bottom: 2rem;">
+                <div style="display: inline-block; background: linear-gradient(135deg, #667eea20, #764ba220); border-radius: 60px; padding: 0.5rem 1.5rem; margin-bottom: 1rem;">
+                    <span style="font-size: 1.2rem;">💬</span>
+                </div>
+                <h3 style="background: linear-gradient(135deg, #667eea, #764ba2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-size: 2rem; margin-bottom: 0.5rem;">Share Your Feedback</h3>
+                <p style="color: #666;">Have questions, suggestions, or found a broken link? Let me know!</p>
+                <div style="display: flex; justify-content: center; gap: 1rem; margin-top: 1rem; flex-wrap: wrap;">
+                    <span style="background: #e8f5e9; color: #4caf50; padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.8rem;">📧 Email reply guaranteed</span>
+                    <span style="background: #e3f2fd; color: #2196f3; padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.8rem;">⚡ Response within 48hrs</span>
+                    <span style="background: #fff3e0; color: #ff9800; padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.8rem;">🔒 Your data is safe</span>
+                </div>
             </div>
+            
+            <!-- Loading Indicator -->
+            <div id="loading-indicator" style="text-align: center; padding: 2rem; display: none;">
+                <div style="display: inline-block; width: 40px; height: 40px; border: 3px solid #f3f3f3; border-top: 3px solid #667eea; border-radius: 50%; animation: spin 1s linear infinite;"></div>
+                <p style="color: #666; margin-top: 1rem;">Submitting your feedback...</p>
+            </div>
+            
+            <!-- Form Container -->
+            <div id="form-container">
+                <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSddxRqSASLz-9xB2S_YDim5kwV6sH4nwzRguPOFlcvcGPGudQ/viewform?embedded=true" width="700" height="520" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+            </div>
+            
+            <!-- Success Message -->
+            <div id="success-message" style="display: none; text-align: center; padding: 3rem 2rem;">
+                <div style="animation: fadeInUp 0.5s ease;">
+                    <div style="width: 80px; height: 80px; background: linear-gradient(135deg, #4caf50, #45a049); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem;">
+                        <span style="font-size: 3rem; color: white;">✓</span>
+                    </div>
+                    <h3 style="color: #2e7d32; font-size: 1.8rem; margin-bottom: 1rem;">Thank You!</h3>
+                    <p style="color: #666; font-size: 1.1rem; margin-bottom: 0.5rem;">Your feedback has been submitted successfully.</p>
+                    <p style="color: #999; margin-bottom: 2rem;">I'll review it and respond within 24-48 hours.</p>
+                    <button onclick="resetForm()" style="background: linear-gradient(135deg, #667eea, #764ba2); color: white; border: none; padding: 12px 30px; border-radius: 30px; cursor: pointer; font-weight: 600; transition: 0.3s;">
+                        📝 Submit Another Comment
+                    </button>
+                </div>
+            </div>
+            
+            <p style="text-align: center; color: #999; font-size: 0.8rem; margin-top: 1rem;" id="footer-note">
+                ⚡ Your feedback helps improve this resource hub for everyone
+            </p>
+            
         </div>
-        
     </div>
-</div>
 
-<script>
-// Optional: Display recent comments from Google Sheets (advanced)
-// This shows comments submitted via the form
-async function loadRecentFeedback() {
-    // Note: To display comments publicly, you'll need to publish your Google Sheet
-    // Go to File → Share → Publish to web → Link → Copy URL
-    // Then uncomment the code below and add your published CSV URL
-    
-    /*
-    try {
-        const response = await fetch('YOUR_GOOGLE_SHEETS_PUBLISHED_CSV_URL');
-        const csvText = await response.text();
-        // Parse CSV and display comments
-        const container = document.getElementById('recent-feedback');
-        if (container) {
-            container.innerHTML = '<p style="color: #999;">Recent feedback will appear here</p>';
-        }
-    } catch(e) {
-        console.log('Feedback display not configured');
-    }
-    */
-    
-    // For now, show a simple message
-    const container = document.getElementById('recent-feedback');
-    if (container) {
-        container.innerHTML = `
-            <div style="background: #f8f9fa; border-radius: 15px; padding: 1rem; text-align: center;">
-                <p style="color: #667eea;">✨ Your feedback matters!</p>
-                <p style="color: #999; font-size: 0.9rem;">Use the form above to share your thoughts.</p>
-            </div>
-        `;
-    }
-}
-
-loadRecentFeedback();
-</script>
     <div class="footer">
         <p>© 2026 BSSE Resource Hub - 1st Semester. All rights reserved.</p>
         <p style="font-size: 0.9rem; margin-top: 0.5rem; opacity: 0.8;">Made with ❤️ for BSSE Students</p>
     </div>
 
     <script>
+        // Menu Functions
         function toggleMenu() {
             document.getElementById('sideMenu').classList.toggle('active');
         }
@@ -723,6 +723,92 @@ loadRecentFeedback();
                 menu.classList.remove('active');
             }
         });
+
+        // Comment Section Functions
+        function showSuccessMessage() {
+            const formContainer = document.getElementById('form-container');
+            const successMessage = document.getElementById('success-message');
+            const footerNote = document.getElementById('footer-note');
+            const loadingIndicator = document.getElementById('loading-indicator');
+            
+            if (loadingIndicator) loadingIndicator.style.display = 'none';
+            
+            if (formContainer && successMessage) {
+                formContainer.style.transition = 'opacity 0.3s ease';
+                formContainer.style.opacity = '0';
+                
+                setTimeout(() => {
+                    formContainer.style.display = 'none';
+                    successMessage.style.display = 'block';
+                    successMessage.style.opacity = '0';
+                    
+                    setTimeout(() => {
+                        successMessage.style.opacity = '1';
+                    }, 50);
+                    
+                    if (footerNote) {
+                        footerNote.style.marginTop = '2rem';
+                    }
+                }, 300);
+            }
+        }
+        
+        function resetForm() {
+            const formContainer = document.getElementById('form-container');
+            const successMessage = document.getElementById('success-message');
+            const footerNote = document.getElementById('footer-note');
+            
+            if (successMessage) successMessage.style.display = 'none';
+            
+            if (formContainer) {
+                formContainer.style.display = 'block';
+                
+                setTimeout(() => {
+                    formContainer.style.opacity = '1';
+                }, 50);
+                
+                if (footerNote) {
+                    footerNote.style.marginTop = '1rem';
+                }
+                
+                // Reload the iframe to reset the form
+                const iframe = formContainer.querySelector('iframe');
+                if (iframe) {
+                    const src = iframe.src;
+                    iframe.src = '';
+                    setTimeout(() => {
+                        iframe.src = src;
+                    }, 100);
+                }
+            }
+        }
+        
+        // Monitor for iframe navigation to detect form submission
+        let submitDetected = false;
+        let lastSrc = document.querySelector('iframe')?.src;
+        
+        setInterval(() => {
+            const iframeEl = document.querySelector('iframe');
+            if (iframeEl && iframeEl.src !== lastSrc && !submitDetected) {
+                if (iframeEl.src.includes('formResponse') || 
+                    iframeEl.src.includes('thankyou') ||
+                    iframeEl.src.includes('submitted')) {
+                    submitDetected = true;
+                    showSuccessMessage();
+                    setTimeout(() => { submitDetected = false; }, 5000);
+                }
+                lastSrc = iframeEl.src;
+            }
+        }, 1000);
+        
+        // Show loading indicator when iframe is loading
+        const iframeElement = document.querySelector('iframe');
+        if (iframeElement) {
+            iframeElement.addEventListener('load', function() {
+                const loadingIndicator = document.getElementById('loading-indicator');
+                if (loadingIndicator) loadingIndicator.style.display = 'none';
+            });
+        }
     </script>
 </body>
 </html>
