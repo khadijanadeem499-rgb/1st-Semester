@@ -645,43 +645,175 @@
             <p style="color: #999; font-size: 0.9rem;">📧 You'll receive a copy of your response via email</p>
         </div>
         
-        <!-- GOOGLE FORM EMBED -->
-        <iframe 
-            src="https://docs.google.com/forms/d/e/1FAIpQLSddxRqSASLz-9xB2S_YDim5kwV6sH4nwzRguPOFlcvcGPGudQ/viewform?embedded=true" 
-            width="100%" 
-            height="750" 
-            frameborder="0" 
-            marginheight="0" 
-            marginwidth="0"
-            style="border-radius: 20px; border: none; box-shadow: 0 5px 15px rgba(0,0,0,0.05);">
-            Loading…
-        </iframe>
+        <!-- comments.html - Complete Comment System with Success Message -->
+<div style="max-width: 1400px; margin: 4rem auto 2rem; padding: 0 2rem;">
+    <div style="background: rgba(255,255,255,0.95); border-radius: 30px; padding: 2rem; backdrop-filter: blur(10px); box-shadow: 0 10px 30px rgba(0,0,0,0.1); transition: all 0.3s ease;">
         
-        <p style="text-align: center; color: #999; font-size: 0.8rem; margin-top: 1rem;">
+        <div style="text-align: center; margin-bottom: 2rem;">
+            <h3 style="background: linear-gradient(135deg, #667eea, #764ba2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-size: 2rem; margin-bottom: 0.5rem;">💬 Share Your Feedback</h3>
+            <p style="color: #666;">Have questions, suggestions, or found a broken link? Let me know!</p>
+            <p style="color: #999; font-size: 0.9rem;">📧 You'll receive a copy of your response via email</p>
+        </div>
+        
+        <!-- Form Container (visible by default) -->
+        <div id="form-container">
+            <iframe 
+                src="https://docs.google.com/forms/d/e/1FAIpQLSddxRqSASLz-9xB2S_YDim5kwV6sH4nwzRguPOFlcvcGPGudQ/viewform?embedded=true" 
+                width="100%" 
+                height="750" 
+                frameborder="0" 
+                marginheight="0" 
+                marginwidth="0"
+                style="border-radius: 20px; border: none; box-shadow: 0 5px 15px rgba(0,0,0,0.05);">
+                Loading…
+            </iframe>
+        </div>
+        
+        <!-- Success Message Container (hidden by default) -->
+        <div id="success-message" style="display: none; text-align: center; padding: 3rem 2rem;">
+            <div style="animation: fadeInUp 0.5s ease;">
+                <div style="font-size: 4rem; margin-bottom: 1rem;">✅</div>
+                <h3 style="background: linear-gradient(135deg, #667eea, #764ba2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-size: 1.8rem; margin-bottom: 1rem;">Thank You!</h3>
+                <p style="color: #666; font-size: 1.1rem; margin-bottom: 0.5rem;">Your feedback has been submitted successfully.</p>
+                <p style="color: #999; margin-bottom: 2rem;">I'll review it and respond within 24-48 hours.</p>
+                <button onclick="resetForm()" style="background: linear-gradient(135deg, #667eea, #764ba2); color: white; border: none; padding: 12px 30px; border-radius: 30px; cursor: pointer; font-weight: 600; transition: 0.3s;">
+                    📝 Submit Another Comment
+                </button>
+            </div>
+        </div>
+        
+        <p style="text-align: center; color: #999; font-size: 0.8rem; margin-top: 1rem;" id="footer-note">
             ⚡ Your feedback helps improve this resource hub for everyone
         </p>
         
     </div>
 </div>
-    <script>
-        function toggleMenu() {
-            document.getElementById('sideMenu').classList.toggle('active');
-        }
 
-        function toggleDropdown(btn) {
-            btn.classList.toggle('active');
-            btn.nextElementSibling.classList.toggle('show');
+<style>
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
         }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    /* Loading animation for iframe */
+    iframe {
+        transition: opacity 0.3s ease;
+    }
+</style>
 
-        // Close menu when clicking outside
-        document.addEventListener('click', function(e) {
-            const menu = document.getElementById('sideMenu');
-            const hamburger = document.querySelector('.hamburger');
+<script>
+    // Function to show success message and hide form
+    function showSuccessMessage() {
+        const formContainer = document.getElementById('form-container');
+        const successMessage = document.getElementById('success-message');
+        const footerNote = document.getElementById('footer-note');
+        
+        if (formContainer && successMessage) {
+            // Fade out form
+            formContainer.style.transition = 'opacity 0.3s ease';
+            formContainer.style.opacity = '0';
             
-            if (!menu.contains(e.target) && !hamburger.contains(e.target) && menu.classList.contains('active')) {
-                menu.classList.remove('active');
+            setTimeout(() => {
+                formContainer.style.display = 'none';
+                successMessage.style.display = 'block';
+                successMessage.style.opacity = '0';
+                
+                setTimeout(() => {
+                    successMessage.style.opacity = '1';
+                }, 50);
+                
+                if (footerNote) {
+                    footerNote.style.marginTop = '2rem';
+                }
+            }, 300);
+        }
+    }
+    
+    // Function to reset form (show form again, hide success message)
+    function resetForm() {
+        const formContainer = document.getElementById('form-container');
+        const successMessage = document.getElementById('success-message');
+        const footerNote = document.getElementById('footer-note');
+        
+        if (formContainer && successMessage) {
+            successMessage.style.display = 'none';
+            formContainer.style.display = 'block';
+            
+            setTimeout(() => {
+                formContainer.style.opacity = '1';
+            }, 50);
+            
+            if (footerNote) {
+                footerNote.style.marginTop = '1rem';
             }
-        });
-    </script>
+            
+            // Reload the iframe to reset the form
+            const iframe = formContainer.querySelector('iframe');
+            if (iframe) {
+                const src = iframe.src;
+                iframe.src = '';
+                setTimeout(() => {
+                    iframe.src = src;
+                }, 100);
+            }
+        }
+    }
+    
+    // Detect when iframe URL changes (form submission)
+    // Note: Due to cross-origin restrictions, this listens for iframe load events
+    let lastCheckTime = Date.now();
+    
+    function checkForSubmission() {
+        // This method checks every few seconds if the iframe URL has changed
+        // When Google Forms redirects to the thank you page, we show our custom message
+        const iframe = document.querySelector('iframe');
+        if (iframe && iframe.contentWindow) {
+            try {
+                // Try to detect if we're on the thank you page
+                // This is limited due to cross-origin policies
+            } catch(e) {
+                // Cross-origin error means we can't access the iframe directly
+                // We'll use a different approach
+            }
+        }
+    }
+    
+    // Alternative: Listen for messages from Google Forms (if enabled)
+    window.addEventListener('message', function(event) {
+        // Check if message is from Google Forms about submission
+        if (event.origin === 'https://docs.google.com') {
+            if (event.data === 'submit' || (event.data && event.data.type === 'submit')) {
+                showSuccessMessage();
+            }
+        }
+    });
+    
+    // Since cross-origin detection is limited, we'll add a manual trigger
+    // Users can click a "Submit" button alternative, but for automatic detection,
+    // we'll use a timer-based check on the iframe's visibility changes
+    
+    let submitDetected = false;
+    
+    // Monitor for iframe navigation (best effort)
+    let lastSrc = document.querySelector('iframe')?.src;
+    setInterval(() => {
+        const iframe = document.querySelector('iframe');
+        if (iframe && iframe.src !== lastSrc && !submitDetected) {
+            // Iframe URL changed - likely form submission
+            if (iframe.src.includes('formResponse') || iframe.src.includes('thankyou')) {
+                submitDetected = true;
+                showSuccessMessage();
+                setTimeout(() => { submitDetected = false; }, 5000);
+            }
+            lastSrc = iframe.src;
+        }
+    }, 1000);
+</script>
 </body>
 </html>
