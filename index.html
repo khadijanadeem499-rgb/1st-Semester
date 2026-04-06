@@ -630,20 +630,28 @@
             </a>
         </div>
     </div>
-
-    <div class="footer">
-        <p>© 2026 BSSE Resource Hub - 1st Semester. All rights reserved.</p>
-        <p style="font-size: 0.9rem; margin-top: 0.5rem; opacity: 0.8;">Made with ❤️ for BSSE Students</p>
-    </div>
-<!-- ==================== COMMENTS SECTION (comments.html) ==================== -->
-<!-- comments.html - Complete Comment System with Success Message -->
+<!-- ==================== IMPROVED COMMENTS SECTION ==================== -->
 <div style="max-width: 1400px; margin: 4rem auto 2rem; padding: 0 2rem;">
     <div style="background: rgba(255,255,255,0.95); border-radius: 30px; padding: 2rem; backdrop-filter: blur(10px); box-shadow: 0 10px 30px rgba(0,0,0,0.1); transition: all 0.3s ease;">
         
+        <!-- Header with better design -->
         <div style="text-align: center; margin-bottom: 2rem;">
-            <h3 style="background: linear-gradient(135deg, #667eea, #764ba2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-size: 2rem; margin-bottom: 0.5rem;">💬 Share Your Feedback</h3>
+            <div style="display: inline-block; background: linear-gradient(135deg, #667eea20, #764ba220); border-radius: 60px; padding: 0.5rem 1.5rem; margin-bottom: 1rem;">
+                <span style="font-size: 1.2rem;">💬</span>
+            </div>
+            <h3 style="background: linear-gradient(135deg, #667eea, #764ba2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-size: 2rem; margin-bottom: 0.5rem;">Share Your Feedback</h3>
             <p style="color: #666;">Have questions, suggestions, or found a broken link? Let me know!</p>
-            <p style="color: #999; font-size: 0.9rem;">📧 You'll receive a copy of your response via email</p>
+            <div style="display: flex; justify-content: center; gap: 1rem; margin-top: 1rem; flex-wrap: wrap;">
+                <span style="background: #e8f5e9; color: #4caf50; padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.8rem;">📧 Email reply guaranteed</span>
+                <span style="background: #e3f2fd; color: #2196f3; padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.8rem;">⚡ Response within 48hrs</span>
+                <span style="background: #fff3e0; color: #ff9800; padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.8rem;">🔒 Your data is safe</span>
+            </div>
+        </div>
+        
+        <!-- Loading Indicator -->
+        <div id="loading-indicator" style="text-align: center; padding: 2rem; display: none;">
+            <div style="display: inline-block; width: 40px; height: 40px; border: 3px solid #f3f3f3; border-top: 3px solid #667eea; border-radius: 50%; animation: spin 1s linear infinite;"></div>
+            <p style="color: #666; margin-top: 1rem;">Submitting your feedback...</p>
         </div>
         
         <!-- Form Container (visible by default) -->
@@ -651,24 +659,43 @@
             <iframe 
                 src="https://docs.google.com/forms/d/e/1FAIpQLSddxRqSASLz-9xB2S_YDim5kwV6sH4nwzRguPOFlcvcGPGudQ/viewform?embedded=true" 
                 width="100%" 
-                height="750" 
+                height="700" 
                 frameborder="0" 
                 marginheight="0" 
                 marginwidth="0"
-                style="border-radius: 20px; border: none; box-shadow: 0 5px 15px rgba(0,0,0,0.05);">
+                style="border-radius: 20px; border: 1px solid rgba(0,0,0,0.05); box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: opacity 0.3s ease;">
                 Loading…
             </iframe>
         </div>
         
-        <!-- Success Message Container (hidden by default) -->
+        <!-- Enhanced Success Message (hidden by default) -->
         <div id="success-message" style="display: none; text-align: center; padding: 3rem 2rem;">
             <div style="animation: fadeInUp 0.5s ease;">
-                <div style="font-size: 4rem; margin-bottom: 1rem;">✅</div>
-                <h3 style="background: linear-gradient(135deg, #667eea, #764ba2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-size: 1.8rem; margin-bottom: 1rem;">Thank You!</h3>
+                <div style="width: 80px; height: 80px; background: linear-gradient(135deg, #4caf50, #45a049); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem;">
+                    <span style="font-size: 3rem;">✓</span>
+                </div>
+                <h3 style="color: #2e7d32; font-size: 1.8rem; margin-bottom: 1rem;">Thank You!</h3>
                 <p style="color: #666; font-size: 1.1rem; margin-bottom: 0.5rem;">Your feedback has been submitted successfully.</p>
+                <p style="color: #999; margin-bottom: 0.5rem;">A copy has been sent to your email.</p>
                 <p style="color: #999; margin-bottom: 2rem;">I'll review it and respond within 24-48 hours.</p>
-                <button onclick="resetForm()" style="background: linear-gradient(135deg, #667eea, #764ba2); color: white; border: none; padding: 12px 30px; border-radius: 30px; cursor: pointer; font-weight: 600; transition: 0.3s;">
+                <button onclick="resetForm()" style="background: linear-gradient(135deg, #667eea, #764ba2); color: white; border: none; padding: 12px 30px; border-radius: 30px; cursor: pointer; font-weight: 600; transition: 0.3s; margin-right: 1rem;">
                     📝 Submit Another Comment
+                </button>
+                <button onclick="scrollToTop()" style="background: transparent; color: #667eea; border: 2px solid #667eea; padding: 12px 30px; border-radius: 30px; cursor: pointer; font-weight: 600; transition: 0.3s;">
+                    ↑ Back to Top
+                </button>
+            </div>
+        </div>
+        
+        <!-- Error Message (hidden by default) -->
+        <div id="error-message" style="display: none; text-align: center; padding: 3rem 2rem;">
+            <div style="animation: fadeInUp 0.5s ease;">
+                <div style="font-size: 4rem; margin-bottom: 1rem;">⚠️</div>
+                <h3 style="color: #d32f2f; font-size: 1.8rem; margin-bottom: 1rem;">Submission Error</h3>
+                <p style="color: #666; margin-bottom: 1rem;">Something went wrong while submitting your feedback.</p>
+                <p style="color: #999; margin-bottom: 2rem;">Please try again or contact me directly at the email in the Contact page.</p>
+                <button onclick="retryForm()" style="background: linear-gradient(135deg, #667eea, #764ba2); color: white; border: none; padding: 12px 30px; border-radius: 30px; cursor: pointer; font-weight: 600;">
+                    🔄 Try Again
                 </button>
             </div>
         </div>
@@ -692,21 +719,32 @@
         }
     }
     
-    /* Loading animation for iframe */
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+    
     iframe {
         transition: opacity 0.3s ease;
     }
 </style>
 
 <script>
+    // Scroll to top function
+    function scrollToTop() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    
     // Function to show success message and hide form
     function showSuccessMessage() {
         const formContainer = document.getElementById('form-container');
         const successMessage = document.getElementById('success-message');
         const footerNote = document.getElementById('footer-note');
+        const loadingIndicator = document.getElementById('loading-indicator');
+        
+        if (loadingIndicator) loadingIndicator.style.display = 'none';
         
         if (formContainer && successMessage) {
-            // Fade out form
             formContainer.style.transition = 'opacity 0.3s ease';
             formContainer.style.opacity = '0';
             
@@ -726,14 +764,55 @@
         }
     }
     
+    // Function to show error message
+    function showErrorMessage() {
+        const formContainer = document.getElementById('form-container');
+        const errorMessage = document.getElementById('error-message');
+        const loadingIndicator = document.getElementById('loading-indicator');
+        
+        if (loadingIndicator) loadingIndicator.style.display = 'none';
+        
+        if (formContainer && errorMessage) {
+            formContainer.style.display = 'none';
+            errorMessage.style.display = 'block';
+        }
+    }
+    
+    // Function to retry (reset and show form again)
+    function retryForm() {
+        const formContainer = document.getElementById('form-container');
+        const errorMessage = document.getElementById('error-message');
+        const footerNote = document.getElementById('footer-note');
+        
+        if (errorMessage) errorMessage.style.display = 'none';
+        if (formContainer) {
+            formContainer.style.display = 'block';
+            formContainer.style.opacity = '1';
+            if (footerNote) footerNote.style.marginTop = '1rem';
+            
+            // Reload the iframe
+            const iframe = formContainer.querySelector('iframe');
+            if (iframe) {
+                const src = iframe.src;
+                iframe.src = '';
+                setTimeout(() => {
+                    iframe.src = src;
+                }, 100);
+            }
+        }
+    }
+    
     // Function to reset form (show form again, hide success message)
     function resetForm() {
         const formContainer = document.getElementById('form-container');
         const successMessage = document.getElementById('success-message');
+        const errorMessage = document.getElementById('error-message');
         const footerNote = document.getElementById('footer-note');
         
-        if (formContainer && successMessage) {
-            successMessage.style.display = 'none';
+        if (errorMessage) errorMessage.style.display = 'none';
+        if (successMessage) successMessage.style.display = 'none';
+        
+        if (formContainer) {
             formContainer.style.display = 'block';
             
             setTimeout(() => {
@@ -756,55 +835,71 @@
         }
     }
     
-    // Detect when iframe URL changes (form submission)
-    // Note: Due to cross-origin restrictions, this listens for iframe load events
-    let lastCheckTime = Date.now();
-    
-    function checkForSubmission() {
-        // This method checks every few seconds if the iframe URL has changed
-        // When Google Forms redirects to the thank you page, we show our custom message
-        const iframe = document.querySelector('iframe');
-        if (iframe && iframe.contentWindow) {
-            try {
-                // Try to detect if we're on the thank you page
-                // This is limited due to cross-origin policies
-            } catch(e) {
-                // Cross-origin error means we can't access the iframe directly
-                // We'll use a different approach
-            }
-        }
+    // Show loading indicator when iframe starts loading
+    const iframe = document.querySelector('iframe');
+    if (iframe) {
+        iframe.addEventListener('load', function() {
+            const loadingIndicator = document.getElementById('loading-indicator');
+            if (loadingIndicator) loadingIndicator.style.display = 'none';
+        });
+        
+        iframe.addEventListener('beforeunload', function() {
+            const loadingIndicator = document.getElementById('loading-indicator');
+            if (loadingIndicator) loadingIndicator.style.display = 'block';
+        });
     }
     
-    // Alternative: Listen for messages from Google Forms (if enabled)
-    window.addEventListener('message', function(event) {
-        // Check if message is from Google Forms about submission
-        if (event.origin === 'https://docs.google.com') {
-            if (event.data === 'submit' || (event.data && event.data.type === 'submit')) {
-                showSuccessMessage();
-            }
-        }
-    });
-    
-    // Since cross-origin detection is limited, we'll add a manual trigger
-    // Users can click a "Submit" button alternative, but for automatic detection,
-    // we'll use a timer-based check on the iframe's visibility changes
-    
+    // Monitor for iframe navigation (detect form submission)
     let submitDetected = false;
-    
-    // Monitor for iframe navigation (best effort)
     let lastSrc = document.querySelector('iframe')?.src;
+    
     setInterval(() => {
-        const iframe = document.querySelector('iframe');
-        if (iframe && iframe.src !== lastSrc && !submitDetected) {
-            // Iframe URL changed - likely form submission
-            if (iframe.src.includes('formResponse') || iframe.src.includes('thankyou')) {
+        const iframeEl = document.querySelector('iframe');
+        if (iframeEl && iframeEl.src !== lastSrc && !submitDetected) {
+            // Iframe URL changed - likely form submission or navigation
+            if (iframeEl.src.includes('formResponse') || 
+                iframeEl.src.includes('thankyou') ||
+                iframeEl.src.includes('submitted')) {
                 submitDetected = true;
                 showSuccessMessage();
                 setTimeout(() => { submitDetected = false; }, 5000);
+            } else if (iframeEl.src !== lastSrc && !iframeEl.src.includes('viewform')) {
+                // Something went wrong - show error after timeout
+                setTimeout(() => {
+                    if (document.getElementById('form-container').style.display !== 'none') {
+                        showErrorMessage();
+                    }
+                }, 5000);
             }
-            lastSrc = iframe.src;
+            lastSrc = iframeEl.src;
         }
     }, 1000);
+    
+    // Auto-detect when Google Form shows its own success page
+    setTimeout(() => {
+        const checkForGoogleSuccess = setInterval(() => {
+            const iframeEl = document.querySelector('iframe');
+            if (iframeEl && iframeEl.contentDocument) {
+                try {
+                    const thankYouText = iframeEl.contentDocument.body?.innerText || '';
+                    if (thankYouText.includes('Your response has been recorded') || 
+                        thankYouText.includes('submit another response')) {
+                        clearInterval(checkForGoogleSuccess);
+                        showSuccessMessage();
+                    }
+                } catch(e) {
+                    // Cross-origin - can't access, ignore
+                }
+            }
+        }, 2000);
+        
+        // Stop checking after 30 seconds
+        setTimeout(() => clearInterval(checkForGoogleSuccess), 30000);
+    }, 3000);
 </script>
+    <div class="footer">
+        <p>© 2026 BSSE Resource Hub - 1st Semester. All rights reserved.</p>
+        <p style="font-size: 0.9rem; margin-top: 0.5rem; opacity: 0.8;">Made with ❤️ for BSSE Students</p>
+    </div>
 </body>
 </html>
