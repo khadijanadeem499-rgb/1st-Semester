@@ -24,31 +24,19 @@ Quickly find topics using keywords.
 
 **📂 Folder Structure**
 
-├── index.html
+├── index.html    # Main landing page
 
-# Main landing page
-
-├── assets/      
-
-# Images, CSS, and JavaScript files
+├── assets/      # Images, CSS, and JavaScript files
 
 ├── subjects/
 
-│   ├── math-112/ 
+│   ├── math-112/  # Calculus I notes
 
-# Calculus I notes
+│   ├── physics/   # Mechanics and Waves
 
-│   ├── physics/  
+│   └── cs-intro/   # Intro to Programming
 
-# Mechanics and Waves
-
-│   └── cs-intro/   
-
-# Intro to Programming
-
-└── README.md    
-
-# Project documentation
+└── README.md    # Project documentation
 
 **🛠️ How to Run Locally**
 
